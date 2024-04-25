@@ -1,0 +1,17 @@
+.signup_container {
+  background-color: var(--color-gray-500);
+  font-family: var(--font-manrope);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup_form h1 {
+  font-family: var(--font-lexend);
+}
+.checkBox {
+  accent-color: #161616;
+  width: 18px;
+  height: 18px;
+}

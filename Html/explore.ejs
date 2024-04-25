@@ -1,0 +1,121 @@
+<%- include('./_navbar.ejs'); %>
+<section
+  class="container-fluid d-flex justify-content-center align-items-center flex-column explore_section"
+>
+  <h1>Explore Users</h1>
+  <p class="explore_highest">Explore the highest rated users on RateMe</p>
+</section>
+<section class="rating_section py-5">
+  <div class="d-flex justify-content-center gap-4 container-fluid">
+    <div class="col-md-8 explore_content">
+      <div class="explore_head">
+        <span><%= users.length %> Users</span>
+        <div
+          class="d-flex align-items-center justify-content-end gap-3 col-md-6 sort_user"
+        >
+          <span> Sort Users by </span>
+          <select
+            onchange="handleSort(this)"
+            id="explore_sort"
+            class="nav_search explore_search text-light"
+          >
+            1
+            <option value="all">All Users</option>
+            <option value="featured">Featured Users</option>
+            <option value="suggested">Suggested Users</option>
+          </select>
+          <!-- <div class="nav_search explore_search">
+            <input class="" placeholder="Most Rated" type="text" />
+          </div> -->
+        </div>
+      </div>
+      <% users.forEach(function (user){ %>
+      <!-- <div class="rating_box_wrapper">
+        <div
+          class="rating_box gap-3 d-flex justify-content-between align-items-center"
+        >
+          <div>
+            <div class="d-flex align-items-center gap-2">
+              <h5 class="fw-bold m-0"><%= user.full_name %></h5>
+            </div>
+            <div class="d-flex align-items-center gap-5 mt-2">
+              <p class="m-0">
+                <span class="text-silver">Rating:</span>
+                <span><%=user.avgRating %> </span>
+              </p>
+              <p class="m-0">
+                <span class="text-silver">Total Reviews:</span>
+                <span><%=user.total %></span>
+              </p>
+            </div>
+          </div>
+          <a
+            href="/rating?id=<%= user.id %>"
+            class="btn nav_btn2 hero_btn rounded-pill px-4 py-2 fs-6"
+          >
+            Rate Now
+          </a>
+        </div>
+      </div> -->
+      <div class="rating_box_wrapper">
+        <div class="rating_box justify-content-between">
+          <div class="d-flex gap-3">
+            <img
+              class="image2"
+              loading="lazy"
+              alt=""
+              src="<%= user.profile %>"
+            />
+            <div>
+              <div>
+                <div class="d-flex align-items-center gap-2">
+                  <h5 class="fw-bold m-0"><%= user.full_name %></h5>
+                </div>
+              </div>
+              <div class="d-flex mt-2 gap-5">
+                <div class="">
+                  <p>
+                    <span class="text-silver">Competent:</span>
+                    <span><%= user.competentAvg %></span>
+                  </p>
+                  <p>
+                    <span class="text-silver">Likable:</span>
+                    <span><%= user.likableAvg %></span>
+                  </p>
+                  <p>
+                    <span class="text-silver">Influential:</span>
+                    <span><%= user.influentialAvg %></span>
+                  </p>
+                </div>
+
+                <p>
+                  <span class="text-silver">Total Reviews:</span>
+                  <span><%= user.total %></span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <a
+            href="/rating?id=<%= user.id %>"
+            class="btn nav_btn2 hero_btn rounded-pill px-4 py-2 fs-6"
+          >
+            Rate Now
+          </a>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  </div>
+
+  <!-- <div class="navigation">
+    <div class="container">
+      <img loading="lazy" alt="" src="./public/image-62@2x.png" />
+      <div class="paginate active">1</div>
+      <div class="paginate">2</div>
+      <div class="paginate">3</div>
+      <img loading="lazy" alt="" src="./public/image-62@2x.png" />
+    </div>
+  </div> -->
+</section>
+
+<%- include('./_footer.ejs'); %>

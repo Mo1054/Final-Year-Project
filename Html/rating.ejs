@@ -1,0 +1,122 @@
+<%- include('./_navbar.ejs'); %>
+
+<div class="signup_container py-5 container-fluid">
+  <div class="container d-flex gap-5">
+    <div class="profile-container">
+      <img src="<%=user_info.profile %>" class="profile-image" />
+      <div class="mt-3">
+        <h5 class="profile-title">NAME</h5>
+        <h4 class="text-white font-weight-bold profile-info">
+          <%=user_info.full_name %>
+        </h4>
+      </div>
+      <div class="mt-4">
+        <h5 class="profile-title">Competent Rating</h5>
+        <h4 class="text-white font-weight-bold profile-info">
+          <%= competentAvg %>
+        </h4>
+      </div>
+      <div class="mt-4">
+        <h5 class="profile-title">Likable Rating</h5>
+        <h4 class="text-white font-weight-bold profile-info">
+          <%=likableAvg %>
+        </h4>
+      </div>
+      <div class="mt-4">
+        <h5 class="profile-title">Influential Rating</h5>
+        <h4 class="text-white font-weight-bold profile-info">
+          <%=influentialAvg %>
+        </h4>
+      </div>
+      <div class="mt-4">
+        <h5 class="profile-title">Total Rating</h5>
+        <h4 class="text-white font-weight-bold profile-info"><%=total %></h4>
+      </div>
+    </div>
+    <form action="/rating" method="post" class="signup_form w-100">
+      <div class="d-flex gap-4">
+        <div class="w-100">
+          <h4 class="text-white">Competent</h4>
+          <h5 class="profile-title mb-3">SMART, Capable</h5>
+          <div class="text-white">
+            <% options.forEach(function (option, i){ %>
+            <div
+              onclick="setCompetent(this,'<%= 3- i %>')"
+              class="d-flex rating-option option-1"
+            >
+              <p class="option-num"><%= 3 - i %></p>
+              <p class="option-text"><%= option %></p>
+            </div>
+            <% }); %>
+          </div>
+        </div>
+        <div class="w-100">
+          <h4 class="text-white">Likable</h4>
+          <h5 class="profile-title mb-3">Friendly, Kind</h5>
+          <div class="text-white">
+            <% options.forEach(function (option, i){ %>
+            <div
+              onclick="setLikable(this,'<%= 3 - i %>')"
+              class="d-flex rating-option option-2"
+            >
+              <p class="option-num"><%= 3 - i %></p>
+              <p class="option-text"><%= option %></p>
+            </div>
+            <% }); %>
+          </div>
+        </div>
+        <div class="w-100">
+          <h4 class="text-white">Influential</h4>
+          <h5 class="profile-title mb-3">LEADING, IN CHARGE</h5>
+          <div class="text-white">
+            <% options.forEach(function (option, i){ %>
+            <div
+              onclick="setInfluential(this,'<%= 3 - i %>')"
+              class="d-flex rating-option option-3"
+            >
+              <p class="option-num"><%= 3 - i %></p>
+              <p class="option-text"><%= option %></p>
+            </div>
+            <% }); %>
+          </div>
+        </div>
+      </div>
+      <p class="text-white m-0 mt-3 text-bold">Leave a note</p>
+      <div class="nav_search w-100">
+        <textarea
+          name="comment"
+          class="w-100 border-0 outline-0 bg-transparent text-white"
+          rows="5"
+          style="outline: none"
+        ></textarea>
+      </div>
+      <input type="hidden" name="user" value="<%= user_info.id %>" />
+      <input type="hidden" name="rated_by" value="<%= user.id %>" />
+      <input
+        type="hidden"
+        name="competent_rating"
+        value="0"
+        id="competent_rating"
+      />
+      <input
+        type="hidden"
+        name="likable_rating"
+        value="0"
+        id="likable_rating"
+      />
+      <input
+        type="hidden"
+        name="influential_rating"
+        value="0"
+        id="influential_rating"
+      />
+      <button
+        class="text-bold btn nav_btn2 hero_btn rounded-pill w-100 py-3 mt-4"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
+
+<%- include('./_footer.ejs'); %>

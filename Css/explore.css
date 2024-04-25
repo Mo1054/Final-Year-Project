@@ -1,0 +1,112 @@
+.explore_section {
+  background-color: var(--color-gray-200) !important;
+  font-family: var(--font-manrope);
+  color: var(--color-white);
+  padding: 8rem 0;
+}
+.explore_section > h1 {
+  color: var(--color-white);
+  font-family: var(--font-lexend);
+  text-transform: capitalize;
+}
+.explore_search {
+  width: 50%;
+}
+.explore_highest {
+  font-size: var(--font-size-mid);
+  line-height: 26px;
+  font-family: var(--font-manrope);
+  text-align: center;
+}
+.rating_section {
+  background-color: var(--color-gray-500);
+  color: var(--color-white);
+  font-family: var(--font-manrope);
+}
+.rating_btns {
+  gap: 8px;
+}
+.rating_btns > button {
+  font-weight: lighter !important;
+  cursor: pointer;
+  border: 0;
+  padding: 6px 14px;
+  background-color: var(--color-gray-100);
+  border-radius: var(--br-base);
+  font-size: 12px;
+}
+.tick_img {
+  width: 25px;
+  height: 25px;
+}
+.image2 {
+  height: 126px;
+  width: 126px;
+  border-radius: var(--br-9xs);
+  object-fit: cover;
+}
+.rating_box_wrapper {
+  background-color: var(--color-gray-200);
+  padding: 1rem;
+  margin-top: 2rem;
+  border-radius: 6px;
+  width: 100%;
+}
+.rating_box {
+  display: flex;
+  align-items: start;
+  width: 100%;
+}
+.explore_head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.audio-archive {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+.image1 {
+  height: 25px;
+  width: 24px;
+  object-fit: cover;
+}
+.navigation > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.paginate {
+  border-radius: var(--br-xl);
+  background-color: var(--color-white);
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--padding-5xs) var(--padding-base-5) var(--padding-5xs)
+    var(--padding-mid-5);
+  cursor: pointer;
+}
+.navigation .active {
+  background-color: var(--color-purple);
+  color: var(--color-white);
+}
+.review_profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.review_profile > img {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.navigation img {
+  width: 40px;
+  object-fit: cover;
+}

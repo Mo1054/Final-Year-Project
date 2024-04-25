@@ -1,0 +1,91 @@
+<%- include('./_navbar.ejs'); %>
+
+<div class="signup_container py-5 container-fluid">
+  <div class="signup_form col-md-4 mx-auto">
+    <h1 class="text-white text-center">Signup</h1>
+    <p class="text-white fw-lighter text-center">
+      Signup to start rating and reviewing users
+    </p>
+    <form action="/signup" method="post">
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label text-silver"
+          >Full Name
+        </label>
+
+        <div class="nav_search w-100">
+          <input
+            type="text"
+            placeholder="Enter Your Name"
+            id="exampleFormControlInput1"
+            name="name"
+          />
+
+          <i class="fa-solid fa-user" style="color: white; font-size: 22px"></i>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label text-silver"
+          >Email
+        </label>
+
+        <div class="nav_search w-100">
+          <input
+            type="email"
+            placeholder="Enter Your Email "
+            id="exampleFormControlInput1"
+            name="email"
+          />
+
+          <i
+            class="fa-solid fa-envelope"
+            style="color: white; font-size: 22px"
+          ></i>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label text-silver"
+          >Password
+        </label>
+
+        <div class="nav_search w-100">
+          <input
+            type="password"
+            placeholder="***********"
+            id="exampleFormControlInput1"
+            name="password"
+          />
+
+          <img class="search-icon" alt="" src="/lock.svg" />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label text-silver"
+          >Confirm Password
+        </label>
+
+        <div class="nav_search w-100">
+          <input
+            type="password"
+            placeholder="***********"
+            id="exampleFormControlInput1"
+            name="confirm_password"
+          />
+
+          <img class="search-icon" alt="" src="/lock.svg" />
+        </div>
+      </div>
+
+      <button class="btn nav_btn2 hero_btn rounded-pill w-100 py-3 mt-4">
+        Signup
+      </button>
+      <p class="text-end text-silver mt-2">
+        Already have an account?
+        <a href="/login" class="text-silver">Login</a>
+      </p>
+    </form>
+  </div>
+</div>
+
+<%- include('./_footer.ejs'); %>

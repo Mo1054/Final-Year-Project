@@ -1,0 +1,105 @@
+<%- include('./_navbar.ejs'); %>
+
+<div class="hero_section py-5">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div class="hero_content">
+      <h1>
+        Explore top rated
+        <br />
+        users
+      </h1>
+      <p class="rate-and-review">Rate and review other users for feedback</p>
+      <a
+        href="/login"
+        class="btn nav_btn2 hero_btn rounded-pill px-5 py-2 fs-5"
+      >
+        Login
+      </a>
+    </div>
+    <div class="hero_img">
+      <img class="image-14-icon" loading="lazy" alt="" src="/image-14@2x.png" />
+    </div>
+  </div>
+</div>
+
+<section class="user_saying container-fluid">
+  <h2 class="fw-bold">Top Ranking Users</h2>
+  <p class="text-silver mb-5">Explore the highest rated users on RateMe</p>
+  <div
+    class="d-flex align-items-center justify-content-between gap-3 flex-wrap"
+  >
+    <% topUsers.forEach((user) => { %>
+    <div class="card home_card shadow" style="width: 18rem">
+      <img src="<%= user.profile %>" class="card-img-top mt-3" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title fw-bold"><%= user.full_name %></h5>
+        <p class="card-text m-0"><%= user.email %></p>
+        <b class="reviews1 m-0 mb-4">Total Reviews: <%= user.total %></b>
+
+        <div class="d-flex flex-column justify-content-between">
+          <div class="mb-2">
+            <div class="d-flex justify-content-between mb-2">
+              <b class="reviews1">Competent</b>
+              <b class="reviews1" style="min-width: auto"
+                ><%= user.competentAvg %></b
+              >
+            </div>
+            <div class="rating-bar w-100">
+              <div
+                class="average-rating"
+                style="width: <%= user.competentAvg * 10 %>%"
+              ></div>
+            </div>
+          </div>
+          <div class="mb-2">
+            <div class="d-flex justify-content-between mb-2">
+              <b class="reviews1">Likable</b>
+              <b class="reviews1" style="min-width: auto"
+                ><%= user.likableAvg %></b
+              >
+            </div>
+            <div class="rating-bar w-100">
+              <div
+                class="average-rating bar-2"
+                style="width: <%= user.likableAvg * 10 %>%"
+              ></div>
+            </div>
+          </div>
+          <div class="mb-2">
+            <div class="d-flex justify-content-between mb-2">
+              <b class="reviews1">Influential</b>
+              <b class="reviews1" style="min-width: auto"
+                ><%= user.influentialAvg %></b
+              >
+            </div>
+            <div class="rating-bar w-100">
+              <div
+                class="average-rating bar-3"
+                style="width: <%= user.influentialAvg * 10 %>%"
+              ></div>
+            </div>
+          </div>
+          <div class="mb-4">
+            <div class="d-flex justify-content-between mb-2">
+              <b class="reviews1">Total Average</b>
+              <b class="reviews1" style="min-width: auto"
+                ><%= user.avgRating %></b
+              >
+            </div>
+            <div class="rating-bar w-100">
+              <div
+                class="average-rating bar-4"
+                style="width: <%= user.avgRating * 10 %>%"
+              ></div>
+            </div>
+          </div>
+        </div>
+        <a href="/rating?id=<%= user.id %>" class="btn hero_btn nav_btn2"
+          >Rate Now</a
+        >
+      </div>
+    </div>
+    <% }); %>
+  </div>
+</section>
+<%- include('./_footer.ejs'); %>

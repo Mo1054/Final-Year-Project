@@ -1,0 +1,144 @@
+<%- include('./_navbar.ejs'); %>
+<div class="profile py-5">
+  <main class="policy-btn-wrapper">
+    <section class="policy-btn">
+      <div class="policy-btn-inner">
+        <div class="d-flex gap-5">
+          <div class="compare-button-wrapper">
+            <div class="compare-button">
+              <div
+                class="profile-img mb-2 cursor-pointer"
+                onclick="triggerImage()"
+              >
+                <img src="<%= user.profile %>" alt="" id="profile-img" />
+                <div class="camera-icon position-absolute">
+                  <i class="fa-regular fa-image"></i>
+                </div>
+                <input
+                  type="file"
+                  class="d-none"
+                  id="profile-img-input"
+                  accept="image/*"
+                  onchange="uploadProfile(this)"
+                />
+              </div>
+              <h1 class="user-ratings"><%= user.full_name %></h1>
+              <div class="top-users-rankings-wrapper">
+                <div class="top-users-rankings"><%= user.email %></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex justify-content-between mb-2">
+                <b class="reviews1">Competent</b>
+                <b class="reviews1" style="min-width: auto"
+                  ><%= competentAvg %></b
+                >
+              </div>
+              <!-- range bar for showing competent out of 5 -->
+              <div class="rating-bar">
+                <div
+                  class="average-rating"
+                  style="width: <%= competentAvg * 10 %>%"
+                ></div>
+              </div>
+            </div>
+            <div>
+              <div class="d-flex justify-content-between mb-2">
+                <b class="reviews1">Likable</b>
+                <b class="reviews1" style="min-width: auto"
+                  ><%= likableAvg %></b
+                >
+              </div>
+              <!-- range bar for showing competent out of 5 -->
+              <div class="rating-bar">
+                <div
+                  class="average-rating bar-2"
+                  style="width: <%= likableAvg * 10 %>%"
+                ></div>
+              </div>
+            </div>
+            <div>
+              <div class="d-flex justify-content-between mb-2">
+                <b class="reviews1">Influential</b>
+                <b class="reviews1" style="min-width: auto"
+                  ><%= influentialAvg %></b
+                >
+              </div>
+              <!-- range bar for showing competent out of 5 -->
+              <div class="rating-bar">
+                <div
+                  class="average-rating bar-3"
+                  style="width: <%= influentialAvg * 10 %>%"
+                ></div>
+              </div>
+            </div>
+            <div>
+              <div class="d-flex justify-content-between mb-2">
+                <b class="reviews1">Total Average</b>
+                <b class="reviews1" style="min-width: auto"><%= avgRating %></b>
+              </div>
+              <div class="rating-bar">
+                <div
+                  class="average-rating bar-4"
+                  style="width: <%= avgRating * 10 %>%"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-100">
+        <h3 class="text-bold">User Ratings (<%= ratings.length %>)</h3>
+        <% ratings.forEach((rating) => { %>
+        <div class="container-35-wrapper mb-3">
+          <div class="container-35">
+            <div class="d-flex gap-5">
+              <div class="image-33-wrapper">
+                <img
+                  class="image-33-icon"
+                  loading="lazy"
+                  alt=""
+                  src="<%= rating?.profile %>"
+                />
+              </div>
+              <div class="user-picks-parent">
+                <h4 class="user-picks text-bold"><%=rating?.full_name %></h4>
+                <b class="reviews1"
+                  >Competent: <%=(rating.competent_rating * 10 / 3).toFixed(1)
+                  %>
+                </b>
+                <b class="reviews1"
+                  >Likable: <%=(rating.likable_rating * 10 / 3).toFixed(1) %>
+                </b>
+                <b class="reviews1"
+                  >Influential: <%=(rating.influential_rating * 10 /
+                  3).toFixed(1) %>
+                </b>
+                <div class="favorite-users-i mt-3"><%=rating?.comment %></div>
+              </div>
+            </div>
+            <a
+              href="/rating?id=<%= rating.rated_by %>"
+              class="btn nav_btn2 hero_btn rounded-pill px-4 py-2 fs-6"
+            >
+              Rate Now
+            </a>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+
+      <!-- <div class="button-17-wrapper">
+        <button class="button-17">
+          <div class="load-more">Load More</div>
+        </button>
+      </div> -->
+    </section>
+  </main>
+</div>
+
+<%- include('./_footer.ejs'); %>
