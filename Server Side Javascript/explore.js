@@ -1,11 +1,11 @@
 const getAverageRatings = require("./utlis/getAverage");
+const categories = require("./utlis/categories");
+const countryList = require("./utlis/countryList");
+const getWeather = require("./utlis/weatherApi");
 
-// Route handler for web app
 module.exports = function (app) {
-  //The Code for contact page goes here
-
-  //Render page
-  app.get("/explore", function (req, res) {
+  app.get("/explore", async function (req, res) {
+    const weather = getWeather(req);
     if (!req.session.user) {
       res.redirect("/login");
     } else {
@@ -16,6 +16,11 @@ module.exports = function (app) {
             user: req.session.user,
             users: [],
             sort: req.query.sort || "all",
+            categories,
+            countryList,
+            cat: req.query.cat || "all",
+            country: req.query.country || "all",
+            weather,
           });
         } else {
           let data = results;
@@ -35,11 +40,12 @@ module.exports = function (app) {
                   if (err) {
                     reject(err);
                   } else {
-                    // get average rating from results array using rating field
                     let ratings = getAverageRatings(results);
-                    //add rating to one digit after the decimal
                     const total = results.length;
-                    resolve({ ...ratings, total });
+                    const category = categories.find(
+                      (cat) => cat.id == user.subcategory
+                    );
+                    resolve({ ...ratings, total, category });
                   }
                 });
               });
@@ -54,10 +60,24 @@ module.exports = function (app) {
           } else if (req.query.sort === "featured") {
             users = users.sort((a, b) => b.avgRating - a.avgRating);
           }
+          if (req.query.country && req.query.country !== "all") {
+            const c = countryList[req.query.country];
+            users = users.filter((u) => u.country === c.value);
+          }
+
+          if (req.query.cat && req.query.cat !== "all") {
+            users = users.filter((u) => u.subcategory == req.query.cat);
+          }
+
           res.render("explore.ejs", {
             user: req.session.user,
             users,
             sort: req.query.sort || "all",
+            categories,
+            countryList,
+            cat: req.query.cat || "all",
+            country: req.query.country || "all",
+            weather,
           });
         }
       });

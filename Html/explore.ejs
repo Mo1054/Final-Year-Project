@@ -7,6 +7,49 @@
 </section>
 <section class="rating_section py-5">
   <div class="d-flex justify-content-center gap-4 container-fluid">
+    <div class="col-md-3 explore_sidebar">
+      <div>
+        <p class="mb-2 mt-4">User Country</p>
+        <div class="nav_search w-100">
+          <select
+            class="bg-transparent text-silver border-0 w-100 outline-0"
+            aria-label="Default select example"
+            name="country"
+            style="outline: none"
+            id="countries_list"
+            onchange="setCountry(this)"
+          >
+            <option class="bg-dark" value="all">Any</option>
+            <% countryList.forEach((c, i) => { %>
+            <option class="bg-dark" value="<%= i %>"><%= c.label %></option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <p class="mb-2 mt-4">User Subcategories</p>
+        <div
+          class="rating_btns d-flex flex-wrap align-items-start justify-content-start"
+        >
+          <button
+            class="<%= cat == 'all' ? 'active' : '' %>"
+            onclick="setCat('all')"
+          >
+            Any
+          </button>
+          <% categories.forEach(function (category) { %>
+          <button
+            class="<%= cat == category.id ? 'active' : '' %>"
+            onclick="setCat('<%= category.id %>')"
+          >
+            <%= category.name %>
+          </button>
+          <% }); %>
+        </div>
+      </div>
+    </div>
+
     <div class="col-md-8 explore_content">
       <div class="explore_head">
         <span><%= users.length %> Users</span>
@@ -24,39 +67,10 @@
             <option value="featured">Featured Users</option>
             <option value="suggested">Suggested Users</option>
           </select>
-          <!-- <div class="nav_search explore_search">
-            <input class="" placeholder="Most Rated" type="text" />
-          </div> -->
         </div>
       </div>
       <% users.forEach(function (user){ %>
-      <!-- <div class="rating_box_wrapper">
-        <div
-          class="rating_box gap-3 d-flex justify-content-between align-items-center"
-        >
-          <div>
-            <div class="d-flex align-items-center gap-2">
-              <h5 class="fw-bold m-0"><%= user.full_name %></h5>
-            </div>
-            <div class="d-flex align-items-center gap-5 mt-2">
-              <p class="m-0">
-                <span class="text-silver">Rating:</span>
-                <span><%=user.avgRating %> </span>
-              </p>
-              <p class="m-0">
-                <span class="text-silver">Total Reviews:</span>
-                <span><%=user.total %></span>
-              </p>
-            </div>
-          </div>
-          <a
-            href="/rating?id=<%= user.id %>"
-            class="btn nav_btn2 hero_btn rounded-pill px-4 py-2 fs-6"
-          >
-            Rate Now
-          </a>
-        </div>
-      </div> -->
+
       <div class="rating_box_wrapper">
         <div class="rating_box justify-content-between">
           <div class="d-flex gap-3">
@@ -96,26 +110,37 @@
             </div>
           </div>
           <a
-            href="/rating?id=<%= user.id %>"
+            href="/user?id=<%= user.id %>"
             class="btn nav_btn2 hero_btn rounded-pill px-4 py-2 fs-6"
           >
-            Rate Now
+            View Profile
           </a>
+        </div>
+        <div class="audio-archive mt-3 gap-3">
+          <div
+            class="d-flex align-items-center justify-content-center gap-4"
+            style="width: 126px"
+          >
+            <div class="social-icon">
+              <i class="fa-brands fa-facebook"></i>
+            </div>
+            <div class="social-icon">
+              <i class="fa-brands fa-linkedin"></i>
+            </div>
+          </div>
+          <div>
+            <span class="text-silver fs-14 me-5"
+              ><%= user.category.name %>
+            </span>
+            <span class="text-silver fs-14 me-5 text-bold"
+              ><%= user.country %>
+            </span>
+          </div>
         </div>
       </div>
       <% }); %>
     </div>
   </div>
-
-  <!-- <div class="navigation">
-    <div class="container">
-      <img loading="lazy" alt="" src="./public/image-62@2x.png" />
-      <div class="paginate active">1</div>
-      <div class="paginate">2</div>
-      <div class="paginate">3</div>
-      <img loading="lazy" alt="" src="./public/image-62@2x.png" />
-    </div>
-  </div> -->
 </section>
 
 <%- include('./_footer.ejs'); %>

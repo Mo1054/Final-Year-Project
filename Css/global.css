@@ -239,6 +239,10 @@ body {
 .text-bold {
   font-weight: bold;
 }
+.btn-primary {
+  background-color: var(--color-darkmagenta) !important;
+  border: none !important;
+}
 
 /* responsisv design  */
 @media screen and (max-width: 1200px) {

@@ -9,12 +9,21 @@
         users
       </h1>
       <p class="rate-and-review">Rate and review other users for feedback</p>
+      <% if(user) { %>
+      <a
+        href="/explore"
+        class="btn nav_btn2 hero_btn rounded-pill px-5 py-2 fs-5"
+      >
+        Explore Now
+      </a>
+      <% } else { %>
       <a
         href="/login"
         class="btn nav_btn2 hero_btn rounded-pill px-5 py-2 fs-5"
       >
         Login
       </a>
+      <% } %>
     </div>
     <div class="hero_img">
       <img class="image-14-icon" loading="lazy" alt="" src="/image-14@2x.png" />
@@ -94,8 +103,10 @@
             </div>
           </div>
         </div>
-        <a href="/rating?id=<%= user.id %>" class="btn hero_btn nav_btn2"
-          >Rate Now</a
+        <a
+          href="<%= userId == user.id ? '/profile' : '/user?id=' + user.id %>"
+          class="btn hero_btn nav_btn2"
+          >View Profile</a
         >
       </div>
     </div>

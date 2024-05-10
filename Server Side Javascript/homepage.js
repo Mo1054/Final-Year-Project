@@ -1,14 +1,10 @@
 const getAverageRatings = require("./utlis/getAverage");
+const getWeather = require("./utlis/weatherApi");
 
-// Route handler for web app
 module.exports = function (app) {
-  //The Code for contact page goes here
+  app.get("/", async function (req, res) {
+    const weather = await getWeather(req);
 
-  //Render page
-  app.get("/", function (req, res) {
-    if (req.session.user) {
-      res.redirect("/profile");
-    }
     let sql = "";
     if (!req.session.user) {
       sql = "SELECT * FROM users";
@@ -18,8 +14,10 @@ module.exports = function (app) {
     db.query(sql, [req.session.user?.id], async (err, results) => {
       if (err) {
         res.render("index.ejs", {
-          user: req.session.user,
+          user: req.session.user || null,
           topUsers: [],
+          userId: req.session?.user?.id || "",
+          weather,
         });
       } else {
         let users = await Promise.all(
@@ -31,7 +29,6 @@ module.exports = function (app) {
                 if (err) {
                   reject(err);
                 } else {
-                  // get average rating from results array using rating field
                   const ratings = getAverageRatings(results);
 
                   let avgRating =
@@ -39,9 +36,8 @@ module.exports = function (app) {
                       parseFloat(ratings.likableAvg) +
                       parseFloat(ratings.influentialAvg)) /
                     3;
-                  //add rating to one digit after the decimal
-                  // avgRating = avgRating.toFixed(1);
                   const total = results.length;
+                  avgRating = avgRating.toFixed(1);
                   resolve({ avgRating, total, ...ratings });
                 }
               });
@@ -57,8 +53,10 @@ module.exports = function (app) {
         users = users.sort((a, b) => b.avgRating - a.avgRating);
         users = users.slice(0, 4);
         res.render("index.ejs", {
-          user: req.session.user,
+          user: req.session.user || null,
           topUsers: users,
+          userId: req.session?.user?.id || "",
+          weather,
         });
       }
     });

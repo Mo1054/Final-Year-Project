@@ -17,8 +17,28 @@ if (explore_sort) {
   }
 }
 
+if (urlParams.get("country")) {
+  const country = urlParams.get("country");
+  document.getElementById("countries_list").selectedIndex =
+    parseInt(country) + 1;
+}
+
 function handleSort(e) {
   urlParams.set("sort", e.value);
+  window.location.search = urlParams.toString();
+}
+
+function setCat(id) {
+  urlParams.set("cat", id);
+  window.location.search = urlParams.toString();
+}
+
+function setCountry(e) {
+  if (e.value === "all") {
+    urlParams.delete("country");
+  } else {
+    urlParams.set("country", e.value);
+  }
   window.location.search = urlParams.toString();
 }
 
@@ -37,7 +57,6 @@ function uploadProfile(e) {
   })
     .then((response) => response.json())
     .then((data) => {
-      // Process the response data
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -47,19 +66,16 @@ function uploadProfile(e) {
       };
     })
     .catch((error) => {
-      // Handle any errors
       console.error("Error:", error);
       alert("Error uploading profile image");
     });
 }
 
 function setCompetent(e, num) {
-  //remove all the selected classes from option-1 element
   const ratingOptions = document.getElementsByClassName("option-1");
   Array.from(ratingOptions).forEach((option) =>
     option.classList.remove("selected")
   );
-  // Add the selected class
   e.classList.add("selected");
 
   const competent_rating = document.getElementById("competent_rating");

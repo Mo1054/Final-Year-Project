@@ -199,9 +199,6 @@
 .compare-button {
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
 }
 
 .top-users-rankings-wrapper {
@@ -1367,7 +1364,9 @@
   border-radius: 20px;
   overflow: hidden;
 }
-
+.rating-bar2 {
+  width: 100%;
+}
 .average-rating {
   position: absolute;
   top: 0;
@@ -1399,6 +1398,21 @@
   font-size: 16px;
   font-weight: bold;
   color: #fff;
+}
+.small-text {
+  color: var(--color-silver);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+.custom-modal {
+  background-color: var(--color-gray-300) !important;
+}
+.profile-socials {
+  cursor: pointer;
+}
+.profile-socials > i {
+  font-size: 20px;
+  width: 20px;
 }
 
 @media screen and (max-width: 1200px) {

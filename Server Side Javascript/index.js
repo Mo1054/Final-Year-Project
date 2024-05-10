@@ -1,12 +1,8 @@
-// My wep appp
-
-// Import the modules we need
 var express = require("express");
 var ejs = require("ejs");
 var bodyParser = require("body-parser");
 const path = require("path");
 const mysql = require("mysql");
-// const mime = require("mime");
 const session = require("express-session");
 
 // Define the database connection
@@ -16,7 +12,6 @@ const db = mysql.createConnection({
   password: "qwerty",
   database: "rateMe",
 });
-
 
 // Connect to the database
 db.connect((err) => {
@@ -49,20 +44,6 @@ app.use(express.static(path.join(__dirname, "..", "Client Side Javascript")));
 
 app.use(express.static(path.join(__dirname, "..", "Images")));
 
-// app.use(express.static(path.join(__dirname, 'Client Side Javascript')));
-
-// This is the code Gvidas has
-// Set the directory where static files (css, js, etc) will be
-// app.use(express.static(path.join(__dirname, '..', 'Css')));
-// app.use(express.static(path.join(__dirname, '..', 'Images')));
-// app.use(session({
-//     secret: 'your_secret_key',
-//     resave: false,
-//     saveUninitialized: true
-// }));
-// app.use('/Client_Side_Javascript', express.static(path.join(__dirname, '..', 'Client_Side_Javascript')));
-// end of Gvidas Block
-
 // Tell Express that we want to use EJS as the templating engine
 app.set("view engine", "ejs");
 
@@ -79,6 +60,7 @@ app.set("views", path.join(__dirname, "..", "Html"));
 require("./homepage")(app);
 require("./login")(app);
 require("./signup")(app);
+require("./user")(app);
 require("./profile")(app);
 require("./explore")(app);
 require("./rating")(app);
@@ -86,14 +68,3 @@ require("./contact")(app);
 
 // Start the web app listening
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
-//Gvidas code (but the dark mode and validation doesnt work...)
-// app.get('/Client_Side_Javascript/review.js', (req, res) => {
-//     res.setHeader('Content-Type', 'application/javascript');
-//     res.sendFile(path.join(__dirname, '..', 'Client_Side_Javascript', 'review.js'));
-// });
-// app.get('/Client_Side_Javascript/validation.js', (req, res) => {
-//     res.setHeader('Content-Type', 'application/javascript');
-//     res.sendFile(path.join(__dirname, '..', 'Client_Side_Javascript', 'validation.js'));
-// });
-//end of Gvidas block

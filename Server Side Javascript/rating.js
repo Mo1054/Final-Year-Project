@@ -1,18 +1,15 @@
 const getAverageRatings = require("./utlis/getAverage");
+const getWeather = require("./utlis/weatherApi");
 
-// Route handler for web app
 module.exports = function (app) {
-  //The Code for contact page goes here
-
-  //Render page
-  app.get("/rating", function (req, res) {
+  app.get("/rating", async function (req, res) {
     if (!req.session.user) {
       res.redirect("/login");
     } else {
+      const weather = await getWeather(req);
       const sql =
         "SELECT users.*, ratings.* FROM users LEFT JOIN ratings ON users.id = ratings.user WHERE users.id = ?";
       db.query(sql, [req.query.id], (err, results) => {
-        console.log(results);
         if (err) throw err;
         if (results.length <= 0) {
           res.send("User not found");
@@ -29,8 +26,9 @@ module.exports = function (app) {
             ...ratings,
             total,
             user: req.session.user,
-            user_info: user,
+            user_info: { ...user, id: req.query.id },
             options: ["Very", "Yes", "Somewhat", "No"],
+            weather,
           });
         }
       });

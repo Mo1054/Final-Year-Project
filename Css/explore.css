@@ -31,9 +31,17 @@
   cursor: pointer;
   border: 0;
   padding: 6px 14px;
-  background-color: var(--color-gray-100);
+  color: var(--color-gray-100);
   border-radius: var(--br-base);
+  background-color: transparent;
+  border: 1px solid var(--color-gray-100);
   font-size: 12px;
+}
+
+.rating_btns > button:hover,
+.rating_btns > button.active {
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-500);
 }
 .tick_img {
   width: 25px;
@@ -65,7 +73,6 @@
 .audio-archive {
   display: flex;
   align-items: center;
-  gap: 3rem;
 }
 .image1 {
   height: 25px;
@@ -109,4 +116,8 @@
 .navigation img {
   width: 40px;
   object-fit: cover;
+}
+.social-icon {
+  font-size: 23px;
+  cursor: pointer;
 }

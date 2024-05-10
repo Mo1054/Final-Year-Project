@@ -45,6 +45,48 @@
 
       <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label text-silver"
+          >Country
+        </label>
+
+        <div class="nav_search w-100">
+          <select
+            class="bg-transparent text-silver border-0 w-100 outline-0"
+            aria-label="Default select example"
+            name="country"
+            style="outline: none"
+          >
+            <option class="bg-dark" value="" selected>Choose Country</option>
+            <% countryList.forEach((c) => { %>
+            <option class="bg-dark" value="<%= c.value %>">
+              <%= c.label %>
+            </option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label text-silver"
+          >Profession Category
+        </label>
+
+        <div class="nav_search w-100">
+          <select
+            class="bg-transparent text-silver border-0 w-100 outline-0"
+            aria-label="Default select example"
+            name="subcategory"
+            style="outline: none"
+          >
+            <option class="bg-dark" value="" selected>Choose Category</option>
+            <% categories.forEach((c) => { %>
+            <option class="bg-dark" value="<%= c.id %>"><%= c.name %></option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label text-silver"
           >Password
         </label>
 
