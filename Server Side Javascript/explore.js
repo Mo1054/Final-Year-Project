@@ -5,7 +5,8 @@ const getWeather = require("./utlis/weatherApi");
 
 module.exports = function (app) {
   app.get("/explore", async function (req, res) {
-    const weather = getWeather(req);
+    // calling weather api
+    const weather = await getWeather(req);
     if (!req.session.user) {
       res.redirect("/login");
     } else {
@@ -24,6 +25,7 @@ module.exports = function (app) {
           });
         } else {
           let data = results;
+          // filter by query
           if (req.query.query) {
             data = data.filter((user) =>
               user.full_name
@@ -34,6 +36,7 @@ module.exports = function (app) {
           let users = await Promise.all(
             data.map(async (user) => {
               let sql = "";
+              // get user ratings
               sql = "SELECT * FROM ratings WHERE user = ?";
               const ratings = await new Promise((resolve, reject) => {
                 db.query(sql, [user.id], (err, results) => {
@@ -55,6 +58,8 @@ module.exports = function (app) {
               };
             })
           );
+
+          // sorting data
           if (req.query.sort === "suggested") {
             users = users.sort((a, b) => b.total - a.total);
           } else if (req.query.sort === "featured") {

@@ -2,6 +2,7 @@ const explore_sort = document.getElementById("explore_sort");
 const urlParams = new URLSearchParams(window.location.search);
 const paramValue = urlParams.get("sort");
 if (explore_sort) {
+  // set selected sort value after refresh
   switch (paramValue) {
     case "all":
       explore_sort.selectedIndex = 0;
@@ -18,21 +19,25 @@ if (explore_sort) {
 }
 
 if (urlParams.get("country")) {
+  // set selected country after refresh
   const country = urlParams.get("country");
   document.getElementById("countries_list").selectedIndex =
     parseInt(country) + 1;
 }
 
+// handle sorting on change
 function handleSort(e) {
   urlParams.set("sort", e.value);
   window.location.search = urlParams.toString();
 }
 
+// handle category on change
 function setCat(id) {
   urlParams.set("cat", id);
   window.location.search = urlParams.toString();
 }
 
+// handle country on change
 function setCountry(e) {
   if (e.value === "all") {
     urlParams.delete("country");
@@ -42,10 +47,13 @@ function setCountry(e) {
   window.location.search = urlParams.toString();
 }
 
+// handle file input open
 function triggerImage(e) {
   const profileInput = document.getElementById("profile-img-input");
   profileInput.click();
 }
+
+// handle file upload
 
 function uploadProfile(e) {
   const file = e.files[0];
@@ -71,6 +79,7 @@ function uploadProfile(e) {
     });
 }
 
+// handle rating selection
 function setCompetent(e, num) {
   const ratingOptions = document.getElementsByClassName("option-1");
   Array.from(ratingOptions).forEach((option) =>

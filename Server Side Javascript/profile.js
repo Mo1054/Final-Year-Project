@@ -10,6 +10,7 @@ module.exports = function (app) {
     if (!req.session.user) {
       res.redirect("/login");
     } else {
+      // geting user category from categories list
       const cat = categories.find((c) => c.id == req.session.user.subcategory);
       const sql =
         "SELECT ratings.*, users.full_name, users.profile FROM ratings INNER JOIN users ON ratings.rated_by = users.id WHERE user = ?";
@@ -50,7 +51,7 @@ module.exports = function (app) {
       });
     }
   });
-
+// upload profile picture
   app.post("/uploadProfile", upload.single("file"), function (req, res) {
     if (!req.session.user.id) {
       res.redirect("/login");
@@ -67,12 +68,15 @@ module.exports = function (app) {
         db.query(sql, [req.session.user.id], (err, results) => {
           if (err)
             res.status(500).send({ error: "Error while uploading profile" });
+          // update current user session info
           req.session.user = results[0];
           res.send({ message: "Profile Updated" });
         });
       }
     );
   });
+
+  // Update Profile info
   app.post("/updateProfile", upload.single("file"), function (req, res) {
     if (!req.session.user.id) {
       res.redirect("/login");
@@ -91,6 +95,7 @@ module.exports = function (app) {
         db.query(sql, [req.session.user.id], (err, results) => {
           if (err)
             res.status(500).send({ error: "Error while uploading profile" });
+          // update current user session info
           req.session.user = results[0];
           res.redirect("/profile");
         });

@@ -1,310 +1,529 @@
-<%- include('./_navbar.ejs'); %>
-<!-- Modal -->
-<div
-  class="modal fade"
-  id="exampleModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog" role="document">
-    <form action="/updateProfile" method="post">
-      <div class="modal-content custom-modal">
-        <div class="modal-body">
-          <h5 class="modal-title text-center text-white" id="exampleModalLabel">
-            Update Profile
-          </h5>
-          <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label text-silver"
-              >Full Name
-            </label>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-            <div class="nav_search w-100">
-              <input
-                type="text"
-                placeholder="Enter Your Name"
-                id="exampleFormControlInput1"
-                name="name"
-                value="<%= user.full_name %>"
-              />
-
-              <i
-                class="fa-solid fa-user"
-                style="color: white; font-size: 22px"
-              ></i>
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label text-silver"
-              >Facebook
-            </label>
-
-            <div class="nav_search w-100">
-              <input
-                type="text"
-                placeholder="Your Facebook Link"
-                id="exampleFormControlInput1"
-                name="fb"
-                value="<%= user.fb %>"
-              />
-
-              <i
-                class="fa-brands fa-facebook"
-                style="color: white; font-size: 22px"
-              ></i>
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label text-silver"
-              >Linkedin
-            </label>
-
-            <div class="nav_search w-100">
-              <input
-                type="text"
-                placeholder="Your Linkedin Link"
-                id="exampleFormControlInput1"
-                name="linkedin"
-                value="<%= user.linkedin %>"
-              />
-
-              <i
-                class="fa-brands fa-linkedin"
-                style="color: white; font-size: 22px"
-              ></i>
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label text-silver"
-              >Country
-            </label>
-
-            <div class="nav_search w-100">
-              <select
-                class="bg-transparent text-silver border-0 w-100 outline-0"
-                aria-label="Default select example"
-                name="country"
-                style="outline: none"
-              >
-                <option class="bg-dark" value="">Choose Country</option>
-                <% countryList.forEach((c) => { if(c.value == user.country) { %>
-
-                <option class="bg-dark" selected value="<%= c.value %>">
-                  <%= c.label %>
-                </option>
-                <% } else { %>
-                <option class="bg-dark" value="<%= c.value %>">
-                  <%= c.label %>
-                </option>
-                <% }}) %>
-              </select>
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label text-silver"
-              >Profession Category
-            </label>
-
-            <div class="nav_search w-100">
-              <select
-                class="bg-transparent text-silver border-0 w-100 outline-0"
-                aria-label="Default select example"
-                name="subcategory"
-                style="outline: none"
-              >
-                <option class="bg-dark" value="" selected>
-                  Choose Category
-                </option>
-                <% categories.forEach((c) => { if(c.id == user.subcategory) { %>
-                <option class="bg-dark" selected value="<%= c.id %>">
-                  <%= c.name %>
-                </option>
-                <% } else { %>
-                <option class="bg-dark" value="<%= c.id %>">
-                  <%= c.name %>
-                </option>
-                <% }}) %>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Close
-          </button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
-        </div>
+    <link rel="stylesheet" href="./global.css" />
+    <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="./conversion-output.css" />
+    <link rel="stylesheet" href="./explore.css" />
+    <link rel="stylesheet" href="./profile.css" />
+    <link rel="stylesheet" href="./search.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css    "
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>RateMe</title>
+  </head>
+  <body>
+    <!-- navbar  -->
+    <% if(locals.error){ %>
+    <div
+      class="bg-dark alert rounded-0 text-white alert-dismissible fade show mb-0 pe-3"
+      role="alert"
+    >
+      <div class="container d-flex justify-content-between">
+        <div><strong class="text-danger">Error!</strong> <%= error %></div>
+        <button
+          type="button"
+          class="border-0"
+          style="background: none"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        >
+          <i
+            class="fa-solid fa-xmark"
+            style="color: white; font-size: 22px"
+          ></i>
+        </button>
       </div>
-    </form>
-  </div>
-</div>
-<div class="profile py-5">
-  <main class="policy-btn-wrapper">
-    <section class="policy-btn">
-      <div class="policy-btn-inner">
-        <div class="d-flex flex-column gap-3">
-          <div class="compare-button-wrapper">
-            <div class="compare-button align-items-center">
-              <div
-                class="profile-img mb-2 cursor-pointer"
-                onclick="triggerImage()"
-              >
-                <img src="<%= user.profile %>" alt="" id="profile-img" />
-                <div class="camera-icon position-absolute">
-                  <i class="fa-regular fa-image"></i>
-                </div>
-                <input
-                  type="file"
-                  class="d-none"
-                  id="profile-img-input"
-                  accept="image/*"
-                  onchange="uploadProfile(this)"
+    </div>
+    <% } %>
+
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="/">RateMe</a>
+        <form action="/explore" class="nav_search position-relative">
+          <input name="query" placeholder="Search " type="text" />
+          <button
+            type="submit"
+            class="border-0 fs-24 text-white cursor-pointer position-absolute bg-transparent"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon text-white"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+            <% if(user && weather){ %>
+            <li class="nav-item">
+              <div class="d-flex align-items-center">
+                <img
+                  src="https://openweathermap.org/img/w/<%= weather.icon %>.png"
+                  alt=""
                 />
+                <div class="ms-1">
+                  <span class="text-white"><%= weather.temp %>°C</span>
+                </div>
               </div>
-              <div class="d-flex flex-column gap-2 ms-4">
-                <h1 class="user-ratings"><%= user.full_name %></h1>
-                <p class="small-text"><%= user.email %></p>
-                <p class="small-text"><%= user.country %></p>
-                <p class="small-text"><%= cat.name %></p>
-                <button
-                  class="btn btn-primary"
-                  data-toggle="modal"
-                  data-target="#exampleModal"
-                >
-                  Update
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="d-flex flex-column gap-2">
-            <% if(user.fb) { %>
-            <div class="d-flex align-items-center gap-3 profile-socials">
-              <i
-                class="fa-brands fa-facebook"
-                style="color: white; font-size: 22px"
-              ></i>
-              <a href="<%= user.fb %>" target="_blank" class="small-text"
-                ><%= user.fb %>
-              </a>
-            </div>
-            <% } if(user.linkedin) { %>
-            <div class="d-flex align-items-center gap-3 profile-socials">
-              <i
-                class="fa-brands fa-linkedin"
-                style="color: white; font-size: 22px"
-              ></i>
-              <a href="<%= user.linkedin %>" target="_blank" class="small-text"
-                ><%= user.linkedin %></a
+            </li>
+
+            <% } if(!user){ %>
+
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/">Home</a>
+            </li>
+            <% } %>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/contact"
+                >Contact Us</a
               >
-            </div>
+            </li>
+            <% if(user){ %>
+            <li class="nav-item">
+              <a class="nav-link" href="/explore">Explore Users </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/profile">Profile</a>
+            </li>
+            <% } %>
+          </ul>
+          <div class="d-flex">
+            <% if(user){ %>
+            <a class="btn nav_btn1 me-2" href="/logout">Logout</a>
+            <% } else { %>
+            <a class="btn nav_btn1 me-2" href="/login">Login</a>
+            <a class="btn nav_btn2" href="/signup">Signup</a>
             <% } %>
           </div>
-          <div class="d-flex flex-column justify-content-between gap-3">
-            <div>
-              <div class="d-flex justify-content-between mb-2">
-                <b class="reviews1">Competent</b>
-                <b class="reviews1" style="min-width: auto"
-                  ><%= competentAvg %></b
-                >
+        </div>
+      </div>
+    </nav>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <form action="/updateProfile" method="post">
+          <div class="modal-content custom-modal">
+            <div class="modal-body">
+              <h5
+                class="modal-title text-center text-white"
+                id="exampleModalLabel"
+              >
+                Update Profile
+              </h5>
+              <div class="mb-3">
+                <label
+                  for="exampleFormControlInput1"
+                  class="form-label text-silver"
+                  >Full Name
+                </label>
+
+                <div class="nav_search w-100">
+                  <input
+                    type="text"
+                    placeholder="Enter Your Name"
+                    id="exampleFormControlInput1"
+                    name="name"
+                    value="<%= user.full_name %>"
+                  />
+
+                  <i
+                    class="fa-solid fa-user"
+                    style="color: white; font-size: 22px"
+                  ></i>
+                </div>
               </div>
-              <!-- range bar for showing competent out of 5 -->
-              <div class="rating-bar rating-bar2">
-                <div
-                  class="average-rating"
-                  style="width: <%= competentAvg * 10 %>%"
-                ></div>
+              <div class="mb-3">
+                <label
+                  for="exampleFormControlInput1"
+                  class="form-label text-silver"
+                  >Facebook
+                </label>
+
+                <div class="nav_search w-100">
+                  <input
+                    type="text"
+                    placeholder="Your Facebook Link"
+                    id="exampleFormControlInput1"
+                    name="fb"
+                    value="<%= user.fb %>"
+                  />
+
+                  <i
+                    class="fa-brands fa-facebook"
+                    style="color: white; font-size: 22px"
+                  ></i>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label
+                  for="exampleFormControlInput1"
+                  class="form-label text-silver"
+                  >Linkedin
+                </label>
+
+                <div class="nav_search w-100">
+                  <input
+                    type="text"
+                    placeholder="Your Linkedin Link"
+                    id="exampleFormControlInput1"
+                    name="linkedin"
+                    value="<%= user.linkedin %>"
+                  />
+
+                  <i
+                    class="fa-brands fa-linkedin"
+                    style="color: white; font-size: 22px"
+                  ></i>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label
+                  for="exampleFormControlInput1"
+                  class="form-label text-silver"
+                  >Country
+                </label>
+
+                <div class="nav_search w-100">
+                  <select
+                    class="bg-transparent text-silver border-0 w-100 outline-0"
+                    aria-label="Default select example"
+                    name="country"
+                    style="outline: none"
+                  >
+                    <option class="bg-dark" value="">Choose Country</option>
+                    <% countryList.forEach((c) => { if(c.value == user.country)
+                    { %>
+
+                    <option class="bg-dark" selected value="<%= c.value %>">
+                      <%= c.label %>
+                    </option>
+                    <% } else { %>
+                    <option class="bg-dark" value="<%= c.value %>">
+                      <%= c.label %>
+                    </option>
+                    <% }}) %>
+                  </select>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label
+                  for="exampleFormControlInput1"
+                  class="form-label text-silver"
+                  >Profession Category
+                </label>
+
+                <div class="nav_search w-100">
+                  <select
+                    class="bg-transparent text-silver border-0 w-100 outline-0"
+                    aria-label="Default select example"
+                    name="subcategory"
+                    style="outline: none"
+                  >
+                    <option class="bg-dark" value="" selected>
+                      Choose Category
+                    </option>
+                    <% categories.forEach((c) => { if(c.id == user.subcategory)
+                    { %>
+                    <option class="bg-dark" selected value="<%= c.id %>">
+                      <%= c.name %>
+                    </option>
+                    <% } else { %>
+                    <option class="bg-dark" value="<%= c.id %>">
+                      <%= c.name %>
+                    </option>
+                    <% }}) %>
+                  </select>
+                </div>
               </div>
             </div>
-            <div>
-              <div class="d-flex justify-content-between mb-2">
-                <b class="reviews1">Likable</b>
-                <b class="reviews1" style="min-width: auto"
-                  ><%= likableAvg %></b
-                >
-              </div>
-              <!-- range bar for showing competent out of 5 -->
-              <div class="rating-bar rating-bar2">
-                <div
-                  class="average-rating bar-2"
-                  style="width: <%= likableAvg * 10 %>%"
-                ></div>
-              </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Save changes
+              </button>
             </div>
-            <div>
-              <div class="d-flex justify-content-between mb-2">
-                <b class="reviews1">Influential</b>
-                <b class="reviews1" style="min-width: auto"
-                  ><%= influentialAvg %></b
-                >
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="profile py-5">
+      <main class="policy-btn-wrapper">
+        <section class="policy-btn">
+          <div class="policy-btn-inner">
+            <div class="d-flex flex-column gap-3">
+              <div class="compare-button-wrapper">
+                <div class="compare-button align-items-center">
+                  <div
+                    class="profile-img mb-2 cursor-pointer"
+                    onclick="triggerImage()"
+                  >
+                    <img src="<%= user.profile %>" alt="" id="profile-img" />
+                    <div class="camera-icon position-absolute">
+                      <i class="fa-regular fa-image"></i>
+                    </div>
+                    <input
+                      type="file"
+                      class="d-none"
+                      id="profile-img-input"
+                      accept="image/*"
+                      onchange="uploadProfile(this)"
+                    />
+                  </div>
+                  <div class="d-flex flex-column gap-2 ms-4">
+                    <h1 class="user-ratings"><%= user.full_name %></h1>
+                    <p class="small-text"><%= user.email %></p>
+                    <p class="small-text"><%= user.country %></p>
+                    <p class="small-text"><%= cat.name %></p>
+                    <button
+                      class="btn btn-primary"
+                      data-toggle="modal"
+                      data-target="#exampleModal"
+                    >
+                      Update
+                    </button>
+                  </div>
+                </div>
               </div>
-              <!-- range bar for showing competent out of 5 -->
-              <div class="rating-bar rating-bar2">
-                <div
-                  class="average-rating bar-3"
-                  style="width: <%= influentialAvg * 10 %>%"
-                ></div>
+              <div class="d-flex flex-column gap-2">
+                <% if(user.fb) { %>
+                <div class="d-flex align-items-center gap-3 profile-socials">
+                  <i
+                    class="fa-brands fa-facebook"
+                    style="color: white; font-size: 22px"
+                  ></i>
+                  <a href="<%= user.fb %>" target="_blank" class="small-text"
+                    ><%= user.fb %>
+                  </a>
+                </div>
+                <% } if(user.linkedin) { %>
+                <div class="d-flex align-items-center gap-3 profile-socials">
+                  <i
+                    class="fa-brands fa-linkedin"
+                    style="color: white; font-size: 22px"
+                  ></i>
+                  <a
+                    href="<%= user.linkedin %>"
+                    target="_blank"
+                    class="small-text"
+                    ><%= user.linkedin %></a
+                  >
+                </div>
+                <% } %>
               </div>
-            </div>
-            <div>
-              <div class="d-flex justify-content-between mb-2">
-                <b class="reviews1">Total Average</b>
-                <b class="reviews1" style="min-width: auto"><%= avgRating %></b>
-              </div>
-              <div class="rating-bar rating-bar2">
-                <div
-                  class="average-rating bar-4"
-                  style="width: <%= avgRating * 10 %>%"
-                ></div>
+              <div class="d-flex flex-column justify-content-between gap-3">
+                <div>
+                  <div class="d-flex justify-content-between mb-2">
+                    <b class="reviews1">Competent</b>
+                    <b class="reviews1" style="min-width: auto"
+                      ><%= competentAvg %></b
+                    >
+                  </div>
+                  <!-- range bar for showing competent out of 5 -->
+                  <div class="rating-bar rating-bar2">
+                    <div
+                      class="average-rating"
+                      style="width: <%= competentAvg * 10 %>%"
+                    ></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="d-flex justify-content-between mb-2">
+                    <b class="reviews1">Likable</b>
+                    <b class="reviews1" style="min-width: auto"
+                      ><%= likableAvg %></b
+                    >
+                  </div>
+                  <!-- range bar for showing competent out of 5 -->
+                  <div class="rating-bar rating-bar2">
+                    <div
+                      class="average-rating bar-2"
+                      style="width: <%= likableAvg * 10 %>%"
+                    ></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="d-flex justify-content-between mb-2">
+                    <b class="reviews1">Influential</b>
+                    <b class="reviews1" style="min-width: auto"
+                      ><%= influentialAvg %></b
+                    >
+                  </div>
+                  <!-- range bar for showing competent out of 5 -->
+                  <div class="rating-bar rating-bar2">
+                    <div
+                      class="average-rating bar-3"
+                      style="width: <%= influentialAvg * 10 %>%"
+                    ></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="d-flex justify-content-between mb-2">
+                    <b class="reviews1">Total Average</b>
+                    <b class="reviews1" style="min-width: auto"
+                      ><%= avgRating %></b
+                    >
+                  </div>
+                  <div class="rating-bar rating-bar2">
+                    <div
+                      class="average-rating bar-4"
+                      style="width: <%= avgRating * 10 %>%"
+                    ></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div class="w-100">
-        <h3 class="text-bold">User Ratings (<%= ratings.length %>)</h3>
-        <% ratings.forEach((rating) => { %>
-        <div class="container-35-wrapper mb-3">
-          <div class="container-35">
-            <div class="d-flex gap-5">
-              <div class="image-33-wrapper">
-                <img
-                  class="image-33-icon"
-                  loading="lazy"
-                  alt=""
-                  src="<%= rating?.profile %>"
-                />
-              </div>
-              <div class="user-picks-parent">
-                <h4 class="user-picks text-bold"><%=rating?.full_name %></h4>
-                <b class="reviews1"
-                  >Competent: <%=(rating.competent_rating * 10 / 3).toFixed(1)
-                  %>
-                </b>
-                <b class="reviews1"
-                  >Likable: <%=(rating.likable_rating * 10 / 3).toFixed(1) %>
-                </b>
-                <b class="reviews1"
-                  >Influential: <%=(rating.influential_rating * 10 /
-                  3).toFixed(1) %>
-                </b>
-                <div class="favorite-users-i mt-3"><%=rating?.comment %></div>
+          <div class="w-100">
+            <h3 class="text-bold">User Ratings (<%= ratings.length %>)</h3>
+            <% ratings.forEach((rating) => { %>
+            <div class="container-35-wrapper mb-3">
+              <div class="container-35">
+                <div class="d-flex gap-5">
+                  <div class="image-33-wrapper">
+                    <img
+                      class="image-33-icon"
+                      loading="lazy"
+                      alt=""
+                      src="<%= rating?.profile %>"
+                    />
+                  </div>
+                  <div class="user-picks-parent">
+                    <h4 class="user-picks text-bold">
+                      <%=rating?.full_name %>
+                    </h4>
+                    <b class="reviews1"
+                      >Competent: <%=(rating.competent_rating * 10 /
+                      3).toFixed(1) %>
+                    </b>
+                    <b class="reviews1"
+                      >Likable: <%=(rating.likable_rating * 10 / 3).toFixed(1)
+                      %>
+                    </b>
+                    <b class="reviews1"
+                      >Influential: <%=(rating.influential_rating * 10 /
+                      3).toFixed(1) %>
+                    </b>
+                    <div class="favorite-users-i mt-3">
+                      <%=rating?.comment %>
+                    </div>
+                  </div>
+                </div>
+                <a
+                  href="/user?id=<%=rating.rated_by %>"
+                  class="btn nav_btn2 hero_btn rounded-pill px-4 py-2 fs-6"
+                >
+                  View Profile
+                </a>
               </div>
             </div>
-            <a
-              href="/user?id=<%=rating.rated_by %>"
-              class="btn nav_btn2 hero_btn rounded-pill px-4 py-2 fs-6"
-            >
-              View Profile
-            </a>
+            <% }); %>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="footer pt-4">
+      <div class="d-flex">
+        <div
+          class="container d-flex justify-content-between align-items-center flex-wrap gap-3"
+        >
+          <div class="left_foot">
+            <p class="text-white fw-bold mb-1" style="font-size: 20px">
+              RateMe
+            </p>
+            <p class="text-silver">
+              Connect with others through ratings and reviews
+            </p>
+          </div>
+          <div class="right_foot d-flex flex-wrap gap-4">
+            <div>
+              <p class="text-white fw-bold mb-1">Explore Users</p>
+              <a
+                href="/explore?sort=featured"
+                class="text-silver mb-0 fs-14 text-decoration-none"
+                >Featured Users</a
+              >
+              <br />
+              <a
+                href="/explore?sort=suggested"
+                class="text-silver mb-0 fs-14 text-decoration-none"
+                >Suggested Users</a
+              >
+            </div>
+            <div>
+              <p class="text-white fw-bold mb-1">Get Support</p>
+              <a
+                href="/contact"
+                class="text-silver mb-0 fs-14 text-decoration-none"
+                >Contact Us</a
+              >
+            </div>
+            <div></div>
           </div>
         </div>
-        <% }); %>
       </div>
-    </section>
-  </main>
-</div>
+      <p class="text-white fw-light mt-4 text-center mb-0">
+        Copyright &copy; RateMe | All rights reserved
+      </p>
+    </footer>
 
-<%- include('./_footer.ejs'); %>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="index.js"></script>
+  </body>
+</html>

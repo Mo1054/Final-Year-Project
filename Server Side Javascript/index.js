@@ -1,3 +1,4 @@
+// install libaries
 var express = require("express");
 var ejs = require("ejs");
 var bodyParser = require("body-parser");
@@ -5,7 +6,6 @@ const path = require("path");
 const mysql = require("mysql");
 const session = require("express-session");
 
-// Define the database connection
 const db = mysql.createConnection({
   host: "localhost",
   user: "forumapp",
@@ -33,6 +33,7 @@ app.use(
     saveUninitialized: true,
   })
 );
+
 //Use bodyParser in express
 app.use(bodyParser.urlencoded({ extended: true }));
 

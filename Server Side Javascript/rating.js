@@ -16,6 +16,7 @@ module.exports = function (app) {
         } else {
           const user = results[0];
           if (results[0].likable_rating) {
+            // if user have any ratings then calculate average ratings
             var ratings = getAverageRatings(results);
             var total = results.length;
           } else {
@@ -34,6 +35,8 @@ module.exports = function (app) {
       });
     }
   });
+
+  // add ratings
   app.post("/rating", function (req, res) {
     const {
       user,

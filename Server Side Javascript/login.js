@@ -9,6 +9,7 @@ module.exports = function (app) {
     });
   });
 
+  // Handle login
   app.post("/login", function (req, res) {
     const { email, password } = req.body;
     const sql = "SELECT * FROM users WHERE email = ?";
@@ -20,6 +21,7 @@ module.exports = function (app) {
         const user = results[0];
         bcrypt.compare(password, user.password, (err, result) => {
           if (result) {
+            // Set create session
             req.session.cookie.expires = new Date(
               Date.now() + 1000 * 60 * 60 * 24
             );

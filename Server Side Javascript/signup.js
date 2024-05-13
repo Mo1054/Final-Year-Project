@@ -13,6 +13,7 @@ module.exports = function (app) {
     });
   });
 
+  // create new account
   app.post("/signup", function (req, res) {
     const { name, email, country, subcategory, password, confirm_password } =
       req.body;

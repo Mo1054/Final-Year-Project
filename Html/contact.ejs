@@ -1,4 +1,130 @@
-<%- include('./_navbar.ejs'); %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <link rel="stylesheet" href="./global.css" />
+    <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="./conversion-output.css" />
+    <link rel="stylesheet" href="./explore.css" />
+    <link rel="stylesheet" href="./profile.css" />
+    <link rel="stylesheet" href="./search.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css    "
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>RateMe</title>
+  </head>
+  <body>
+    <!-- navbar  -->
+    <% if(locals.error){ %>
+    <div
+      class="bg-dark alert rounded-0 text-white alert-dismissible fade show mb-0 pe-3"
+      role="alert"
+    >
+      <div class="container d-flex justify-content-between">
+        <div><strong class="text-danger">Error!</strong> <%= error %></div>
+        <button
+          type="button"
+          class="border-0"
+          style="background: none"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        >
+          <i
+            class="fa-solid fa-xmark"
+            style="color: white; font-size: 22px"
+          ></i>
+        </button>
+      </div>
+    </div>
+    <% } %>
+
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="/">RateMe</a>
+        <form action="/explore" class="nav_search position-relative">
+          <input name="query" placeholder="Search " type="text" />
+          <button
+            type="submit"
+            class="border-0 fs-24 text-white cursor-pointer position-absolute bg-transparent"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon text-white"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+            <% if(user && weather){ %>
+            <li class="nav-item">
+              <div class="d-flex align-items-center">
+                <img
+                  src="https://openweathermap.org/img/w/<%= weather.icon %>.png"
+                  alt=""
+                />
+                <div class="ms-1">
+                  <span class="text-white"><%= weather.temp %>°C</span>
+                </div>
+              </div>
+            </li>
+
+            <% } if(!user){ %>
+
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/">Home</a>
+            </li>
+            <% } %>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/contact"
+                >Contact Us</a
+              >
+            </li>
+            <% if(user){ %>
+            <li class="nav-item">
+              <a class="nav-link" href="/explore">Explore Users </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/profile">Profile</a>
+            </li>
+            <% } %>
+          </ul>
+          <div class="d-flex">
+            <% if(user){ %>
+            <a class="btn nav_btn1 me-2" href="/logout">Logout</a>
+            <% } else { %>
+            <a class="btn nav_btn1 me-2" href="/login">Login</a>
+            <a class="btn nav_btn2" href="/signup">Signup</a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </nav>
 <div class="signup_container py-5 container-fluid">
   <div class="contact-container col-md-9 mx-auto p-3">
     <h1 class="text-white text-center">Contact Us</h1>
@@ -32,4 +158,43 @@
   </div>
 </div>
 
-<%- include('./_footer.ejs'); %>
+
+<footer class="footer pt-4">
+  <div class="d-flex">
+
+    <div
+    class="container d-flex justify-content-between align-items-center flex-wrap gap-3"
+    >
+    <div class="left_foot">
+      <p class="text-white fw-bold mb-1" style="font-size: 20px">RateMe</p>
+      <p class="text-silver">
+        Connect with others through ratings and reviews
+      </p>
+    </div>
+    <div class="right_foot d-flex flex-wrap gap-4">
+      <div>
+        <p class="text-white fw-bold mb-1">Explore Users</p>
+        <a href="/explore?sort=featured" class="text-silver mb-0 fs-14 text-decoration-none">Featured Users</a>
+        <br>
+        <a href="/explore?sort=suggested" class="text-silver mb-0 fs-14 text-decoration-none">Suggested Users</a>
+      </div>
+      <div>
+        <p class="text-white fw-bold mb-1">Get Support</p>
+        <a href="/contact" class="text-silver mb-0 fs-14 text-decoration-none">Contact Us</a>
+      </div>
+      <div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <p class="text-white fw-light mt-4 text-center mb-0">
+    Copyright &copy; RateMe | All rights reserved
+  </p>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="index.js"></script>
+</body>
+</html>

@@ -30,7 +30,7 @@ module.exports = function (app) {
                   reject(err);
                 } else {
                   const ratings = getAverageRatings(results);
-
+                  // Average rating of all types of ratings
                   let avgRating =
                     (parseFloat(ratings.competentAvg) +
                       parseFloat(ratings.likableAvg) +
@@ -48,6 +48,7 @@ module.exports = function (app) {
             };
           })
         );
+        // filter and sorting
         users = users.filter((user) => user.total > 0);
         users = users.sort((a, b) => b.total - a.total);
         users = users.sort((a, b) => b.avgRating - a.avgRating);
